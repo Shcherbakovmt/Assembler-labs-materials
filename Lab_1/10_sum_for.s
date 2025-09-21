@@ -1,25 +1,27 @@
-	.file	"7_while.c"
+	.file	"10_sum_for.c"
 	.text
 	.globl	a
-	.bss
-	.align 4
-	.type	a, @object
-	.size	a, 4
-a:
-	.zero	4
-	.globl	b
 	.data
-	.align 4
-	.type	b, @object
-	.size	b, 4
-b:
+	.align 32
+	.type	a, @object
+	.size	a, 40
+a:
+	.long	1
+	.long	2
+	.long	3
+	.long	4
 	.long	5
-	.globl	summm
+	.long	6
+	.long	7
+	.long	8
+	.long	9
+	.long	10
+	.globl	summ
 	.bss
 	.align 4
-	.type	summm, @object
-	.size	summm, 4
-summm:
+	.type	summ, @object
+	.size	summ, 4
+summ:
 	.zero	4
 	.section	.rodata
 .LC0:
@@ -36,30 +38,34 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movl	$0, -4(%rbp)
 #APP
-# 10 "7_while.c" 1
-	.Increment: 
-    movl a(%rip), %eax 
-    addl $1, %eax 
-    movl %eax, a(%rip) 
-    jmp .While_al10 
-.While_al10: 
-    movl a(%rip), %eax 
-    cmpl $10, %eax 
-    jl .Increment 
+# 8 "10_sum_for.c" 1
+	   movl    $0, %ecx 
+   jmp .Check_counter 
+.for_iteration: 
+   movl    %ecx, %eax 
+   cltq 
+   leaq 0(, %rax, 4), %rdx 
+   leaq a(%rip), %rax 
+   movl (%rdx,%rax), %ebx 
+   movl summ(%rip), %edx 
+   addl %ebx, %edx 
+   movl %edx, summ(%rip) 
+   addl $1, %ecx 
+.Check_counter: 
+   cmpl $9, %ecx 
+   jle .for_iteration 
 
 # 0 "" 2
 #NO_APP
-	movl	a(%rip), %eax
+	movl	summ(%rip), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rax
 	movq	%rax, %rdi
 	movl	$0, %eax
 	call	printf@PLT
 	movl	$0, %eax
-	leave
+	popq	%rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

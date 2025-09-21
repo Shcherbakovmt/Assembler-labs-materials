@@ -1,25 +1,27 @@
-	.file	"7_while.c"
+	.file	"11_find_max.c"
 	.text
 	.globl	a
-	.bss
-	.align 4
-	.type	a, @object
-	.size	a, 4
-a:
-	.zero	4
-	.globl	b
 	.data
-	.align 4
-	.type	b, @object
-	.size	b, 4
-b:
-	.long	5
-	.globl	summm
+	.align 32
+	.type	a, @object
+	.size	a, 40
+a:
+	.long	1
+	.long	2
+	.long	3
+	.long	4
+	.long	52
+	.long	6
+	.long	77
+	.long	8
+	.long	9
+	.long	10
+	.globl	maxx
 	.bss
 	.align 4
-	.type	summm, @object
-	.size	summm, 4
-summm:
+	.type	maxx, @object
+	.size	maxx, 4
+maxx:
 	.zero	4
 	.section	.rodata
 .LC0:
@@ -36,30 +38,39 @@ main:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movl	$0, -4(%rbp)
 #APP
-# 10 "7_while.c" 1
-	.Increment: 
-    movl a(%rip), %eax 
-    addl $1, %eax 
-    movl %eax, a(%rip) 
-    jmp .While_al10 
-.While_al10: 
-    movl a(%rip), %eax 
-    cmpl $10, %eax 
-    jl .Increment 
+# 8 "11_find_max.c" 1
+	   movl    $-100000, maxx(%rip) 
+   movl    $0, %ecx 
+   jmp .Check_counter 
+.for_iteration: 
+   movl    %ecx, %eax 
+   cltq 
+   leaq 0(, %rax, 4), %rdx 
+   leaq a(%rip), %rax 
+   movl (%rdx,%rax), %ebx 
+   addl $1, %ecx 
+   movl    maxx(%rip), %eax 
+   cmpl    %eax, %ebx 
+   jge     .Change_max 
+   jmp .Check_counter 
+.Change_max: 
+   movl    %ebx, maxx(%rip) 
+   jmp .Check_counter 
+.Check_counter: 
+   cmpl $9, %ecx 
+   jle .for_iteration 
 
 # 0 "" 2
 #NO_APP
-	movl	a(%rip), %eax
+	movl	maxx(%rip), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rax
 	movq	%rax, %rdi
 	movl	$0, %eax
 	call	printf@PLT
 	movl	$0, %eax
-	leave
+	popq	%rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

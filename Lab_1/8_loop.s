@@ -1,4 +1,4 @@
-	.file	"2_for.c"
+	.file	"8_loop.c"
 	.text
 	.globl	a
 	.bss
@@ -13,7 +13,7 @@ a:
 	.type	b, @object
 	.size	b, 4
 b:
-	.long	10
+	.long	5
 	.globl	summm
 	.bss
 	.align 4
@@ -38,16 +38,18 @@ main:
 	.cfi_def_cfa_register 6
 	subq	$16, %rsp
 	movl	$0, -4(%rbp)
-	jmp	.L2
-.L3:
-	movl	summm(%rip), %eax
-	addl	$10, %eax
-	movl	%eax, summm(%rip)
-	addl	$1, -4(%rbp)
-.L2:
-	cmpl	$9, -4(%rbp)
-	jle	.L3
-	movl	summm(%rip), %eax
+#APP
+# 10 "8_loop.c" 1
+	    movl $0, %eax 
+    movl $10, %ecx 
+.sum: 
+    addl %ecx, %eax 
+    loop .sum 
+movl %eax, a(%rip) 
+
+# 0 "" 2
+#NO_APP
+	movl	a(%rip), %eax
 	movl	%eax, %esi
 	leaq	.LC0(%rip), %rax
 	movq	%rax, %rdi
