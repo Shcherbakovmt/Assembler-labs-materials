@@ -45,9 +45,7 @@ movl summm(%rip), %eax
 addl $10, %eax
 movl %eax, summm(%rip)
 addl $1, -4(%rbp)
-.For_5_times:
-cmpl $5, -4(%rbp)
-jle .Add_10
+
 # 0 "" 2
 #NO_APP
 	movl	summm(%rip), %eax
@@ -56,6 +54,15 @@ jle .Add_10
 	movq	%rax, %rdi
 	movl	$0, %eax
 	call	printf@PLT
+	movl	$10, %edi
+	call	putchar@PLT
+#APP
+# 20 "2_for_asm.c" 1
+	.For_5_times:
+cmpl $5, -4(%rbp)
+jle .Add_10
+# 0 "" 2
+#NO_APP
 	movl	$0, %eax
 	leave
 	.cfi_def_cfa 7, 8
