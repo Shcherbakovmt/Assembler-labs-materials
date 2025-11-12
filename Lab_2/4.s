@@ -1,76 +1,125 @@
 	.file	"4.c"
 	.text
-	.globl	Global_Point
-	.bss
-	.align 16
-	.type	Global_Point, @object
-	.size	Global_Point, 24
-Global_Point:
-	.zero	24
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%d"
 	.text
+	.p2align 4
 	.globl	function
 	.type	function, @function
 function:
-.LFB0:
+.LFB23:
 	.cfi_startproc
 	endbr64
-	pushq	%rbp
+	pushq	%r14
 	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
-	movq	%rdi, -8(%rbp)
-	movq	%rsi, -16(%rbp)
-	movq	-8(%rbp), %rcx
-	movq	-16(%rbp), %rsi
-	movq	(%rsi), %rax
-	movq	8(%rsi), %rdx
-	movq	%rax, (%rcx)
-	movq	%rdx, 8(%rcx)
-	movq	16(%rsi), %rax
-	movq	%rax, 16(%rcx)
-	movq	-8(%rbp), %rax
+	.cfi_offset 14, -16
+	pushq	%r13
+	.cfi_def_cfa_offset 24
+	.cfi_offset 13, -24
+	pushq	%r12
+	.cfi_def_cfa_offset 32
+	.cfi_offset 12, -32
+	pushq	%rbp
+	.cfi_def_cfa_offset 40
+	.cfi_offset 6, -40
+	pushq	%rbx
+	.cfi_def_cfa_offset 48
+	.cfi_offset 3, -48
+	movq	%rdi, %rbx
+	leaq	.LC0(%rip), %rdi
+	subq	$16, %rsp
+	.cfi_def_cfa_offset 64
+	movl	4(%rsi), %r12d
+	movl	(%rsi), %ebp
+	movq	%fs:40, %rax
+	movq	%rax, 8(%rsp)
+	xorl	%eax, %eax
+	movq	12(%rsi), %r14
+	movl	20(%rsi), %r13d
+	leaq	4(%rsp), %rsi
+	addl	$1, %r12d
+	movl	$0, 4(%rsp)
+	call	__isoc99_scanf@PLT
+	movd	%ebp, %xmm0
+	movd	%r12d, %xmm1
+	movb	$65, 8(%rbx)
+	movq	%r14, 12(%rbx)
+	punpckldq	%xmm1, %xmm0
+	movl	%r13d, 20(%rbx)
+	movq	%xmm0, (%rbx)
+	movq	8(%rsp), %rax
+	subq	%fs:40, %rax
+	jne	.L5
+	addq	$16, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 48
+	movq	%rbx, %rax
+	popq	%rbx
+	.cfi_def_cfa_offset 40
 	popq	%rbp
-	.cfi_def_cfa 7, 8
+	.cfi_def_cfa_offset 32
+	popq	%r12
+	.cfi_def_cfa_offset 24
+	popq	%r13
+	.cfi_def_cfa_offset 16
+	popq	%r14
+	.cfi_def_cfa_offset 8
 	ret
+.L5:
+	.cfi_restore_state
+	call	__stack_chk_fail@PLT
 	.cfi_endproc
-.LFE0:
+.LFE23:
 	.size	function, .-function
+	.section	.text.startup,"ax",@progbits
+	.p2align 4
 	.globl	main
 	.type	main, @function
 main:
-.LFB1:
+.LFB24:
 	.cfi_startproc
 	endbr64
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
-	.cfi_def_cfa_register 6
-	subq	$32, %rsp
+	pushq	%rbx
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	leaq	.LC0(%rip), %rbx
+	movq	%rbx, %rdi
+	subq	$72, %rsp
+	.cfi_def_cfa_offset 96
 	movq	%fs:40, %rax
-	movq	%rax, -8(%rbp)
+	movq	%rax, 56(%rsp)
 	xorl	%eax, %eax
-	movl	$2, Global_Point(%rip)
-	movl	$10, 4+Global_Point(%rip)
-	movb	$112, 8+Global_Point(%rip)
-	movl	$27, 12+Global_Point(%rip)
-	leaq	-32(%rbp), %rax
-	leaq	Global_Point(%rip), %rdx
-	movq	%rdx, %rsi
-	movq	%rax, %rdi
+	leaq	4(%rsp), %rsi
+	movq	%rsp, %rbp
+	call	__isoc99_scanf@PLT
+	leaq	32(%rsp), %rdi
+	movq	%rbp, %rsi
 	call	function
-	nop
-	movq	-8(%rbp), %rax
+	movl	36(%rsp), %edx
+	xorl	%eax, %eax
+	movq	%rbx, %rsi
+	movl	$2, %edi
+	call	__printf_chk@PLT
+	movq	56(%rsp), %rax
 	subq	%fs:40, %rax
-	je	.L4
-	call	__stack_chk_fail@PLT
-.L4:
-	leave
-	.cfi_def_cfa 7, 8
+	jne	.L9
+	addq	$72, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 24
+	popq	%rbx
+	.cfi_def_cfa_offset 16
+	popq	%rbp
+	.cfi_def_cfa_offset 8
 	ret
+.L9:
+	.cfi_restore_state
+	call	__stack_chk_fail@PLT
 	.cfi_endproc
-.LFE1:
+.LFE24:
 	.size	main, .-main
 	.ident	"GCC: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0"
 	.section	.note.GNU-stack,"",@progbits

@@ -9,20 +9,27 @@ struct point
     
 };
 
-struct point Global_Point;
+
 
 struct point function(struct point* pointer)
 {
-    return *pointer;
+    struct point local_point = *pointer;
+    int a = 0;
+    scanf("%d", &a);
+    local_point.y_int += 1;
+    local_point.name = 'A';
+    return local_point;
 }
 
 void main()
 {
-    Global_Point.x_float = 2;
-    Global_Point.y_int = 10;
-    Global_Point.name = 'p';
-    Global_Point.array[0] = 27;
+    
+    struct point Global_Point;
+    scanf("%d", &Global_Point.y_int);
+    
     
     struct point b = function(&Global_Point);
+    printf("%d", b.y_int);
+    
 
 }

@@ -5,11 +5,11 @@ int main()
 {
 	string S = "Ekvxzsdlrl!vkszhjww1!sxixukrrx!rhrijpj0%mkpmybvlsst\"rj%iwpes!wqhjsuwesekqk";
 	string ans = "";
-	int counter = 3;
+	int counter = 0;
 	for(char i : S)
 	{
 		counter += 1;
-		if(counter > 4)
+		if(counter > 5)
 		{
 			counter = 1;
 		}
