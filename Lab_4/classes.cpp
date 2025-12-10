@@ -2,8 +2,10 @@
 #include <cmath>
 #include "classes.h"
 #include <cfloat>
+#include <iostream>
+#include <iomanip>
 
-static const float G = 10000.0f;
+using namespace std;
 
 float abs(sf::Vector2f a)
 {
@@ -20,14 +22,11 @@ sf::Vector2f F_Grav(object A_test, object B) // вернет силу, дейс�
     {
         return {0,0};
     }
-
 }
-
-
-
 
 object::object(float m, sf::Vector2f v, sf::Vector2f r_vector)
 {
+    
     this->mass = m;
 
     this->velocity = v;
@@ -39,11 +38,18 @@ object::object(float m, sf::Vector2f v, sf::Vector2f r_vector)
 
 void object::turn(float dt, object other)
 {
+    
     acceleration = F_Grav(*this, other)/mass;
 
     sf::Vector2f temp_r = r;
     r = r_before + velocity * (2 * dt);
     r_before = temp_r;
+
+    //cout << std::setprecision(20) << "dr = v * 2 dt = " << velocity.x * 2 * dt << " " << velocity.y * 2 * dt << endl;
+
+    //cout << "r = " << this->r.x  << " " << this->r.y << endl;
+    //cout << "dr = " << (this->r - this->r_before).x << " " << (this->r - this->r_before).y << endl;
+    //cout << std::setprecision(20) << "dv = a * 2 dt = " << acceleration.x * 2 * dt << " " << acceleration.y * 2 * dt << endl;
 
     sf::Vector2f temp_v = velocity;
     velocity = velocity_before + acceleration * (dt * 2);

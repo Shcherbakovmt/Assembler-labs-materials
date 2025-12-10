@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-
+static const float G = 10.0f;
+static sf::Texture BoulderTexture;
 
 class object
 {

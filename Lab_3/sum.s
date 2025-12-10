@@ -8,3 +8,4 @@ ret
 .size sum, .-sum
 
 .section .note.GNU-stack,"",@progbits
+
