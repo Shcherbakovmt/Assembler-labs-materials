@@ -16,7 +16,7 @@ public:
     ~StaticDemo() {
         std::cout << "StaticDemo destructor, instance_id=" << instance_id << "\n";
     }
-
+    /*
     static void static_method() {
         std::cout << "static_method: counter=" << global_counter << "\n";
         // здесь нет доступа к instance_id (нет this)
@@ -24,18 +24,18 @@ public:
 
     void non_static_method() {
         std::cout << "non_static_method: instance_id=" << instance_id << "\n";
-    }
+    }*/
 };
 
 int StaticDemo::global_counter = 0;
 
 int main() {
-    StaticDemo::static_method();
     StaticDemo a;
-    StaticDemo b;
-    a.non_static_method();
-    b.non_static_method();
-    StaticDemo::static_method();
+    a.global_counter = 0;
+
+    StaticDemo::global_counter = 10;
+
+    StaticDemo::global_counter = 20;
 
     return 0;
 }

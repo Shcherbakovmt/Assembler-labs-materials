@@ -18,9 +18,9 @@ public:
         std::cout << "MyClassWithVeryLongName destructor\n";
     }
 
-    void method_change_values(int x, double y) {
-        private_value += x;
-        public_value *= static_cast<int>(y);
+    int method_change_values() {
+
+        return 10;
     }
 
     std::string method_get_text() const {
@@ -37,11 +37,11 @@ MyClassWithVeryLongName global_object;
 int main() {
 
     MyClassWithVeryLongName local_obj;
-    local_obj.method_change_values(10, 2.0);
+    local_obj.method_change_values();
 
     MyClassWithVeryLongName* heap_obj = new MyClassWithVeryLongName();
-    heap_obj->method_change_values(20, 3.0);
+    heap_obj->method_change_values();
     delete heap_obj;
-    global_object.method_change_values(5, 4.0);
+    global_object.method_change_values();
     return 0;
 }

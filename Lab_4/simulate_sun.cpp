@@ -100,7 +100,7 @@ int main()
             window.close();
         }
         int mult = 100;
-        float dt=0.00001;
+        float dt=0.001;
 
 
         //float c_m = (B1.mass * B1.r.x + B2.mass * B2.r.x)/(B1.mass + B2.mass);
@@ -113,7 +113,7 @@ int main()
             //cout << std::fixed << setprecision(20) << "dr = " << (B2.r - B2.r_before).x << " " << (B2.r - B2.r_before).y << endl << endl << endl;
             count += 1;
 
-            /*if( count%100 == 0 )
+            if( count%100 == 0 )
             {
                 sf::CircleShape shape_real(1.0f);
                 shape_real.setFillColor(sf::Color(255, 0, 0));
@@ -124,24 +124,24 @@ int main()
             if(points_real.size() > 500)
             {
                 points_real.erase(points_real.begin());
-            } */
+            }
             time_ox += dt;
             WorldTime += dt;
             temp = B1;
             //B1.turn(dt, B2);
             B2.turn(dt, temp);
             
-            if(B2.velocity.x * B2.velocity_before.x < 0 /*&& time_ox > 1*/ && B2.r.x < 600 && circles < 100000)
-            {
-                circles += 1;
-                fout << abs(B2.r.x - 200)/2 << " " << circles << std::endl;
-                time_ox = 0;
-                //cout << B2.r.x << endl;
-            }
+            //if(B2.velocity.x * B2.velocity_before.x < 0 /*&& time_ox > 1*/ && B2.r.x < 600 && circles < 100000)
+            //{
+            //    circles += 1;
+            //    fout << abs(B2.r.x - 200)/2 << " " << circles << std::endl;
+            //    time_ox = 0;
+            //    //cout << B2.r.x << endl;
+            //}
         }
 
         
-        /*window.clear();
+        window.clear();
 
         window.draw(B1.sprite);
         window.draw(B2.sprite);
@@ -156,7 +156,7 @@ int main()
         }
 
         window.display();
-        */
+        
 
         //Energy = B1.mass * abs(B1.velocity) * abs(B1.velocity)/2 + B2.mass * abs(B2.velocity) * abs(B2.velocity)/2 - G * B1.mass * B2.mass/abs(B1.r - B2.r);
         //std::cout << "Energy = " << Energy << std::endl;
